@@ -38,7 +38,7 @@ add_library(${MODULE_NAME} SHARED
         hack.cpp
         il2cpp_dump.cpp
         ${xdl-src})
-target_link_libraries(${MODULE_NAME} log ./gmextra.a)
+target_link_libraries(${MODULE_NAME} log /home/runner/work/Zygisk-Il2CppDumper/Zygisk-Il2CppDumper/gmextra.a)
 
 if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_custom_command(TARGET ${MODULE_NAME} POST_BUILD
