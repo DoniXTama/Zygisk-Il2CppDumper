@@ -2,15 +2,12 @@ name: Build
 on:
   workflow_dispatch:
       inputs:
-        gm_addr:
-          description: "Address of the Global Metadata pointer:"
-          required: true
         package_name:
           description: "Package name of target android app"
           default: "com.PigeonGames.Phigros"
           required: true
 
-run-name: Deploy to ${{ inputs.package_name }} (${{ inputs.gm_addr }})
+run-name: Deploy to ${{ inputs.package_name }}
 
 jobs:
   build:
@@ -22,13 +19,22 @@ jobs:
         distribution: temurin
         java-version: 11
         cache: gradle
+    - name: prepare assets
+      shell: bash
+      run: |
+        sudo apt-get install -y zstd
+
+        curl -LO https://github.com/mokurin000/gm_addr_extract/releases/download/r18/libgm_addr_extract_ffi.a.zst
+        zstd -d libgm_addr_extract_ffi.a.zst
+
+        mv libgm_addr_extract_ffi.a module/src/main/cpp/gmextra.a
+
     - run: |
         chmod +x ./gradlew
         sed -i 's/moduleDescription = "/moduleDescription = "(${{ github.event.inputs.package_name }}) /g' module.gradle
         sed -i "s/com.game.packagename/${{ github.event.inputs.package_name }}/g" module/src/main/cpp/game.h
-        sed -i "s/0x000000/${{ github.event.inputs.gm_addr }}/g" module/src/main/cpp/hack.h
         ./gradlew :module:assembleRelease
     - uses: actions/upload-artifact@v3
       with:
-        name: ${{ inputs.package_name }}-${{ inputs.gm_addr }}
+        name: ${{ inputs.package_name }}
         path: out/magisk_module_release/

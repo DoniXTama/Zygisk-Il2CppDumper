@@ -3,6 +3,7 @@
 //
 
 #include "hack.h"
+#include "gmextra.h"
 #include "il2cpp_dump.h"
 #include "log.h"
 #include "xdl.h"
@@ -46,7 +47,7 @@ void * hack_thread(const char * game_data_dir) {
     unsigned long base_addr;
     base_addr = get_module_base("libil2cpp.so");
     
-    char * hack_addr = *(char **)(base_addr + GlobalMetadataAddr); 
+    char * hack_addr = *(char **)(base_addr + rva_from_current_process()); 
     auto outPath = std::string(game_data_dir).append("/files/global-metadata.dat");
     std::ofstream outfile(outPath, std::ios::binary | std::ios::out);
     if (outfile.is_open()) {
