@@ -27,12 +27,16 @@ jobs:
         curl -LO https://github.com/mokurin000/gm_addr_extract/releases/download/r18/libgm_addr_extract_ffi.a.zst
         zstd -d libgm_addr_extract_ffi.a.zst
 
-        mv libgm_addr_extract_ffi.a gmextra.a
+        mkdir -p staticlib
+        mv libgm_addr_extract_ffi.a staticlib/gmextra.a
 
     - run: |
         chmod +x ./gradlew
         sed -i 's/moduleDescription = "/moduleDescription = "(${{ github.event.inputs.package_name }}) /g' module.gradle
         sed -i "s/com.game.packagename/${{ github.event.inputs.package_name }}/g" module/src/main/cpp/game.h
+
+        export LIBRARY_PATH+=:$(realpath ./staticlib)
+
         ./gradlew :module:assembleRelease
     - uses: actions/upload-artifact@v3
       with:
