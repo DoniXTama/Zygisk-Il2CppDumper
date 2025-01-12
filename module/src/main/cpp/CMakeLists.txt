@@ -38,7 +38,7 @@ add_library(${MODULE_NAME} SHARED
         hack.cpp
         il2cpp_dump.cpp
         ${xdl-src})
-target_link_libraries(${MODULE_NAME} log ${GMEXTRA_PATH})
+target_link_libraries(${MODULE_NAME} log $ENV{GMEXTRA_PATH})
 
 if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_custom_command(TARGET ${MODULE_NAME} POST_BUILD
