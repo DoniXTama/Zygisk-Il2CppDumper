@@ -24,11 +24,8 @@ jobs:
       run: |
         sudo apt-get install -y zstd
 
-        curl -LO https://github.com/mokurin000/gm_addr_extract/releases/download/r18/libgm_addr_extract_ffi.a.zst
-        zstd -d libgm_addr_extract_ffi.a.zst
-
         mkdir -p staticlib
-        mv libgm_addr_extract_ffi.a staticlib/gmextra.a
+        curl -LO -o staticlib/gmextra.a https://github.com/mokurin000/gm_addr_extract/releases/download/r21/libgm_addr_extract_ffi.a
 
     - run: |
         chmod +x ./gradlew
