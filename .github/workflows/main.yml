@@ -3,11 +3,6 @@ on:
   workflow_dispatch:
       inputs:
         package_name:
-          description: "name: Build
-on:
-  workflow_dispatch:
-      inputs:
-        package_name:
           description: "com.cupcake.sea.block1010.puzzle"
           required: true
 
