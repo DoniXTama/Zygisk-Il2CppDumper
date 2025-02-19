@@ -4,7 +4,7 @@ on:
       inputs:
         package_name:
           description: "Package name of target android app"
-          default: "com.PigeonGames.Phigros"
+          default: "com.cupcake.sea.block1010.puzzle"
           required: true
 
 run-name: Deploy to ${{ inputs.package_name }}
