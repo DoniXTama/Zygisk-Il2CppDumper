@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
       inputs:
         package_name:
-          description: "com.axlebolt.standoff2"
+          description: "com.cupcake.sea.block1010.puzzle"
           required: true
 
 jobs:
